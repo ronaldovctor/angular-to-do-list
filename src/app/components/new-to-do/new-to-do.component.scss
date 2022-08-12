@@ -1,0 +1,59 @@
+$color-blue-1: #025373;
+$color-blue-2: #04ADBF;
+$color-blue-3: #05F2F2;
+$color-blue-4: #05F2DB;
+$color-green-1: #05F2AF;
+
+.new-to-do-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    button {
+        position: relative;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        border: 2px solid white;
+        background: transparent;
+
+        &::before {
+            position: absolute;
+            content: 'Add New Item';
+            inset: 0;
+            clip-path: circle(0%);
+            background: $color-green-1;
+            transition: .5s;
+            color: black;
+            font-size: 1.2em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        &:hover{
+            border: 2px solid white;
+
+            &::before {
+                clip-path: circle(100%);
+                letter-spacing: 3px;
+            }
+
+            span {
+                letter-spacing: 3px;
+            }
+        }
+
+        span {
+            color:white;
+            font-size: 1.2em;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: .5s;
+        }
+    }
+}

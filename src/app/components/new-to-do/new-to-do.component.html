@@ -1,0 +1,8 @@
+<div class="new-to-do-item">
+    <button (click)="addItem()">
+        <span>Add New Item</span>
+    </button>
+    <ng-container *ngIf="addingItem">
+        <app-to-do [checkbox]="true" (saveItem)="save($event)" (delItem)="cancel($event)"></app-to-do>
+    </ng-container>
+</div>

@@ -1,0 +1,18 @@
+<div class="to-do-item" [formGroup]="todoForm">
+    <input hidden formControlName="id">
+    <button [ngClass]="todo.isChecked ? 'check checked' : 'check'" *ngIf="!checkbox" (click)="check()">
+        <fa-icon [icon]="faCheck"></fa-icon>
+    </button>
+
+    <div class="input-box">
+        <input type="text" formControlName="text" #myInput [readonly]="todo.isChecked">
+        <span>Content</span>
+        <i></i>
+    </div>
+    <button class="confirm" *ngIf="checkbox" (click)="save()">
+        <fa-icon [icon]="faCheck"></fa-icon>
+    </button>
+    <button class="del" (click)="del()">
+        <fa-icon [icon]="faTrashCan"></fa-icon>
+    </button>
+</div>
