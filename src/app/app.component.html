@@ -5,6 +5,6 @@
   </div>
   <app-new-to-do></app-new-to-do>
   <ng-container *ngFor="let todo of ($items | async); let i = index">
-    <app-to-do [content]="todo" [checkbox]="false" (saveItem)="check()" (delItem)="del($event)" (checkItem)="update($event)"></app-to-do>
+    <app-to-do [content]="todo" [checkbox]="false" (saveItem)="check()" (delItem)="del($event)" (checkItem)="update($event)" (updateText)="update($event)"></app-to-do>
   </ng-container>
 </section>

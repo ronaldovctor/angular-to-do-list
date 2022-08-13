@@ -1,7 +1,8 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { debounceTime, Subject } from 'rxjs';
 import { Todo } from 'src/app/models/Todo';
 import { ToDoService } from 'src/app/services/to-do.service';
 
@@ -20,9 +21,10 @@ export class ToDoComponent implements OnInit {
   @Output() saveItem: EventEmitter<Todo> = new EventEmitter<Todo>()
   @Output() checkItem: EventEmitter<Todo> = new EventEmitter<Todo>()
   @Output() delItem: EventEmitter<string> = new EventEmitter<string>()
-  @Output() updateItem: EventEmitter<Todo> = new EventEmitter<Todo>()
+  @Output() updateText: EventEmitter<Todo> = new EventEmitter<Todo>()
 
   @ViewChild('myInput') input?: ElementRef
+  textUpdated: Subject<string> = new Subject<string>()
 
   isChecked: boolean = false
   todo!: Todo
@@ -45,6 +47,8 @@ export class ToDoComponent implements OnInit {
       id: new FormControl(this.todo.id || ''),
       text: new FormControl('', Validators.required)
     })
+
+    this.update()
   }
 
   ngAfterViewInit(): void {
@@ -71,4 +75,20 @@ export class ToDoComponent implements OnInit {
   del(): void {
     this.delItem.emit(this.todoForm.get('id')!.value!)
   }
+  
+  changeText(): void {
+    this.textUpdated.next(this.input?.nativeElement.value)
+  }
+
+  update(): void {
+    this.textUpdated.pipe(
+      debounceTime(1100)
+    ).subscribe({
+      next: (val) => {
+        const todo: Todo = {...this.todo, text: val}
+        this.updateText.emit(todo)     
+      }
+    })
+  }
+
 }
